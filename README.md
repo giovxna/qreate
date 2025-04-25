@@ -1,78 +1,66 @@
 # 📦 QCreate - QR Code Generator API
 
-QCreate is a RESTful API built with Spring Boot that allows users to generate QR codes from any text input. Once generated, the image is uploaded to an AWS S3 bucket and a public URL is returned.
+**Technologies**:  
+Java • Spring Boot • AWS SDK • Google ZXing • Docker • Maven  
 
-This project was built with clean architecture principles in mind, using interfaces (ports) and adapters to separate concerns and ensure flexibility and testability.
+RESTful API in Spring Boot for QR code generation with AWS S3 storage, developed with Clean Architecture principles (Ports & Adapters).
 
-## What It Does
+## Features
+- Generates QR codes in PNG (200×200 pixels) from any text
+- Automatically stores images in S3 bucket
+- Returns public URL to access the QR code
 
-- Accepts text input and generates a QR code (PNG format)
-- Uploads the generated image to a specified AWS S3 bucket
-- Returns a public URL to access the QR code image
+## How to Run
 
-## Tech Stack
-
-- Java 21
-- Spring Boot
-- ZXing (QR code generation)
-- AWS SDK v2 (S3 integration)
-- Docker (multi-stage image for build + run)
-- Clean Architecture (Ports & Adapters pattern)
-
-## Running the Project
-
-You can run QCreate either **locally via Maven** or using **Docker**.
-
-### 1. Prerequisites
-
-- Java 21
+### Prerequisites
+- Java 21 JDK
 - Maven 3.9+
-- AWS S3 bucket and credentials with permission to upload objects
-- Docker (optional, if using container)
+- Docker (optional)
+- AWS account with:
+  - Configured S3 bucket
+  - Programmatic access credentials
+  - AWS CLI configured (for local development)
 
-### 2. Environment Variables
+### Environment Variables
 
-Create a `.env` file in your project root **(not committed to Git)** with:
+Create a `.env` file in the project root with:
 
-```env
-AWS_ACCESS_KEY_ID=your-access-key
-AWS_SECRET_ACCESS_KEY=your-secret-key
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-s3-bucket-name
-These variables are injected at runtime when using Docker or can be set via your IDE/environment for local execution.
+```
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=aws_region
+AWS_S3_BUCKET=bucket_name
 ```
 
-3. Run Locally (Maven)
+Locally (Maven)
 ```
+mvn clean package
 mvn spring-boot:run
-Access the API at: http://localhost:8080/qrcode
 ```
 
-4. Run with Docker
+Via Docker
+Build the image:
+
 ```
-docker build -t qcreate .
-docker run -p 8080:8080 \
-  -e AWS_ACCESS_KEY_ID=your-access-key \
-  -e AWS_SECRET_ACCESS_KEY=your-secret-key \
-  -e AWS_REGION=us-east-1 \
-  -e AWS_S3_BUCKET=your-s3-bucket-name \
-  qcreate
+docker build -t qcreate:X.X .
+```
+(Replace X.X with desired version)
+
+Run the container:
+
+```
+docker run --env-file .env -p 8080:8080 qcreate:X.X
 ```
 
-## How to Use the API + Generate QR Code
+##  API Documentation
 
-<b>POST /qrcode</b>
+<b>POST /qrcode</b></br>
+Generates QR code and stores it in S3.
 
-Request:
+Success Response:
+
 ```
 {
-  "text": "https://example.com"
-}
-```
-
-Response:
-```
-{
-  "url": "https://your-bucket-name.s3.us-east-1.amazon.com/generated-file.png"
+  "url": "https://your-bucket.s3.region.amazonaws.com/file.png"
 }
 ```
