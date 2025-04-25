@@ -4,15 +4,11 @@ QCreate is a RESTful API built with Spring Boot that allows users to generate QR
 
 This project was built with clean architecture principles in mind, using interfaces (ports) and adapters to separate concerns and ensure flexibility and testability.
 
----
-
 ## What It Does
 
 - Accepts text input and generates a QR code (PNG format)
 - Uploads the generated image to a specified AWS S3 bucket
 - Returns a public URL to access the QR code image
-
----
 
 ## Tech Stack
 
@@ -23,13 +19,9 @@ This project was built with clean architecture principles in mind, using interfa
 - Docker (multi-stage image for build + run)
 - Clean Architecture (Ports & Adapters pattern)
 
----
-
 ## Running the Project
 
 You can run QCreate either **locally via Maven** or using **Docker**.
-
----
 
 ### 1. Prerequisites
 
@@ -37,8 +29,6 @@ You can run QCreate either **locally via Maven** or using **Docker**.
 - Maven 3.9+
 - AWS S3 bucket and credentials with permission to upload objects
 - Docker (optional, if using container)
-
----
 
 ### 2. Environment Variables
 
