@@ -1,4 +1,4 @@
-# 📦 QCreate - QR Code Generator API
+# 📦 Qreate - QR Code Generator API
 
 **Technologies**:  
 Java • Spring Boot • AWS SDK • Google ZXing • Docker • Maven  
